@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berber Asistanım</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #10141c;
+  color: white;
+}
+header {
+  background: #c99a45;
+  color: #111;
+  padding: 22px;
+  text-align: center;
+}
+header h1 { margin: 0; }
+main { padding: 16px; max-width: 600px; margin: auto; }
+.card {
+  background: #1d2430;
+  padding: 18px;
+  margin: 15px 0;
+  border-radius: 14px;
+}
+h2 { color: #e7b75d; font-size: 19px; }
+input, select, textarea, button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 7px 0;
+  border-radius: 8px;
+  border: 1px solid #414958;
+  font-size: 16px;
+}
+input, select, textarea {
+  background: #111722;
+  color: white;
+}
+button {
+  background: #c99a45;
+  color: #111;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+.item {
+  background: #111722;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+.small {
+  background: #303b4d;
+  color: white;
+}
+.delete {
+  background: #a83c3c;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>✂️ Berber Asistanım</h1>
+  <p>Randevuların ve müşterilerin tek yerde</p>
+</header>
+
+<main>
+
+<div class="card">
+  <h2>📊 Günlük Özet</h2>
+  <p>Toplam randevu: <strong id="count">0</strong></p>
+  <p>Bugünkü kazanç: <strong id="income">0 TL</strong></p>
+</div>
+
+<div class="card">
+  <h2>📅 Yeni Randevu</h2>
+  <form id="bookingForm">
+    <input id="name" placeholder="Müşterinin adı" required>
+    <input id="phone" type="tel" placeholder="Telefon numarası">
+    <input id="date" type="date" required>
+    <input id="time" type="time" required>
+    <select id="service">
+      <option>Saç kesimi</option>
+      <option>Sakal tıraşı</option>
+      <option>Saç ve sakal</option>
+      <option>Diğer</option>
+    </select>
+    <input id="price" type="number" min="0" placeholder="Ücret (TL)">
+    <textarea id="note" placeholder="Müşteri hakkında not"></textarea>
+    <button type="submit">➕ Randevuyu Kaydet</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>📝 Müşteri Not Defteri</h2>
+  <textarea id="quickNote" placeholder="Notunu buraya yaz..."></textarea>
+  <button onclick="saveNote()">
