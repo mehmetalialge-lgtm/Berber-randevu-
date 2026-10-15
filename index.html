@@ -186,4 +186,71 @@ document.getElementById("liste").innerHTML=arr.length?arr.map(r=>`
 <div class="item">
 <h3>${guvenli(r.ad)}</h3>
 <div>${guvenli(new Date(r.tarih).toLocaleString("tr-TR"))}</div>
-<div class="muted">${guvenli(r.berber)} · ${guvenli(r
+<div class="muted">${guvenli(r.berber)} · ${guvenli(r.islem)} · ${r.fiyat} TL</div>
+${r.telefon?`<div class="muted">${guvenli(r.telefon)}</div>`:""}
+${r.not?`<div class="muted">${guvenli(r.not)}</div>`:""}
+<span class="badge">${guvenli(r.durum)}</span><br>
+${r.durum==="Onay Bekliyor"?`<button class="approve" onclick="durum('${r.id}','Onaylandı')">Onayla</button><button class="reject" onclick="durum('${r.id}','Reddedildi')">Reddet</button>`:""}
+${r.durum==="Onaylandı"?`<button class="complete" onclick="durum('${r.id}','Tamamlandı')">Tamamlandı</button><button class="reject" onclick="durum('${r.id}','İptal Edildi')">İptal Et</button>`:""}
+<button class="reject" onclick="sil('${r.id}')">Sil</button>
+</div>`).join(""):'<p class="muted">Randevu bulunmuyor.</p>';
+}
+function durum(id,d){
+const r=randevular.find(x=>x.id===id);if(!r)return;
+if(d==="Onaylandı"){
+const cakisma=randevular.some(x=>x.id!==id&&x.berber===r.berber&&
+["Onaylandı","Onay Bekliyor"].includes(x.durum)&&
+Math.abs(new Date(x.tarih)-new Date(r.tarih))<30*60*1000);
+if(cakisma){alert("Bu saatte başka randevu var.");return}
+}
+r.durum=d;kaydet();
+}
+function sil(id){
+if(confirm("Randevu silinsin mi?")){
+randevular=randevular.filter(r=>r.id!==id);kaydet();
+}
+}
+function ozet(){
+const simdi=new Date();
+const bugun=simdi.getFullYear()+"-"+String(simdi.getMonth()+1).padStart(2,"0")+"-"+String(simdi.getDate()).padStart(2,"0");
+const ay=bugun.slice(0,7);
+const b=randevular.filter(r=>r.durum==="Tamamlandı");
+const toplam=a=>a.reduce((s,r)=>s+Number(r.fiyat||0),0);
+document.getElementById("bugun").textContent=toplam(b.filter(r=>r.tarih.slice(0,10)===bugun))+" TL";
+document.getElementById("ay").textContent=toplam(b.filter(r=>r.tarih.slice(0,7)===ay))+" TL";
+document.getElementById("bekleyen").textContent=randevular.filter(r=>r.durum==="Onay Bekliyor").length;
+document.getElementById("tamamlanan").textContent=b.length;
+}
+function sesBaslat(){
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+const durumEl=document.getElementById("sesDurum");
+if(!SR){durumEl.textContent="Ses tanıma bu tarayıcıda desteklenmiyor. Chrome ile dene.";return}
+const sr=new SR();sr.lang="tr-TR";
+durumEl.textContent="Dinliyorum...";
+sr.onresult=e=>{
+const metin=e.results[0][0].transcript;
+durumEl.textContent="Duyulan: "+metin;
+sesDoldur(metin);
+};
+sr.onerror=()=>durumEl.textContent="Mikrofon iznini kontrol et.";
+sr.start();
+}
+function sesDoldur(metin){
+const k=metin.toLocaleLowerCase("tr-TR");
+const isim=metin.match(/(?:^|\s)([A-ZÇĞİÖŞÜ][a-zçğıöşü]+)/);
+if(isim)document.getElementById("ad").value=isim[1];
+if(k.includes("usta"))document.getElementById("berber").value="Usta";
+else document.getElementById("berber").value="Ben";
+if(k.includes("saç ve sakal")||k.includes("saç sakal"))document.getElementById("islem").value="Saç ve sakal";
+else if(k.includes("sakal"))document.getElementById("islem").value="Sakal";
+else document.getElementById("islem").value="Saç";
+const d=new Date();
+if(k.includes("yarın")||k.includes("yarin"))d.setDate(d.getDate()+1);
+const s=k.match(/(?:saat\s*)?(\d{1,2})[.:](\d{2})/);
+if(s)d.setHours(+s[1],+s[2],0,0);
+else{const h=k.match(/saat\s+(\d{1,2})/);if(h)d.setHours(+h[1],0,0,0)}
+document.getElementById("tarih").value=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+}
+</script>
+</body>
+</html>
