@@ -25,7 +25,50 @@ nav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
 nav button{flex:1;min-width:90px;padding:10px}
 </style>
 </head><link rel="stylesheet" href="style.css">
-<body><script src="script.js"></script>
+<body><script src="script.js"></script><div class="container">
+    <h1>✂️ Berber Randevu</h1>
+    <p class="aciklama">Randevu Yönetim Sistemi</p>
+
+    <div class="kart">
+        <h2>Yeni Randevu</h2>
+
+        <form id="randevuForm">
+            <label>Müşteri Adı</label>
+            <input id="isim" type="text" required>
+
+            <label>Telefon</label>
+            <input id="telefon" type="tel">
+
+            <label>Berber</label>
+            <select id="berber" required>
+                <option value="">Berber seç</option>
+                <option value="Ben">Ben</option>
+                <option value="Usta">Usta</option>
+            </select>
+
+            <label>Tarih</label>
+            <input id="tarih" type="date" required>
+
+            <label>Saat</label>
+            <input id="saat" type="time" required>
+
+            <label>Ücret (TL)</label>
+            <input id="ucret" type="number" min="0">
+
+            <button type="submit">Randevuyu Kaydet</button>
+        </form>
+    </div>
+
+    <div class="kart">
+        <h2>📅 Randevularım</h2>
+        <div id="randevuListesi"></div>
+    </div>
+
+    <div class="kart">
+        <h2>💰 Günlük Kazanç</h2>
+        <p id="gunlukKazanc">0 TL</p>
+    </div>
+</div>
 <header>
 <h1>✂️ BERBER ASİSTANI</h1>
 <p>Randevularını ve kazancını yönet</p>
