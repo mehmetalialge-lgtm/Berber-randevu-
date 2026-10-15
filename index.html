@@ -6,562 +6,66 @@
 <title>Berber Asistanı</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#10141c;
+  color:#fff;
+  font-family:Arial,sans-serif;
 }
-
-body {
-  margin: 0;
-  background: #10141c;
-  color: white;
-  font-family: Arial, sans-serif;
+header{
+  background:#171e2a;
+  padding:20px;
+  text-align:center;
+  border-bottom:1px solid #303949;
 }
-
-header {
-  background: #191f2b;
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid #303746;
+header h1{margin:0;color:#d6b36a}
+header p{color:#aab3c2;margin-bottom:0}
+nav{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  background:#171e2a;
 }
-
-header h1 {
-  margin: 0;
-  color: #e8bd70;
+nav button{flex:1}
+main{padding:14px;max-width:700px;margin:auto}
+.card{
+  background:#1a2230;
+  border:1px solid #303949;
+  padding:16px;
+  border-radius:14px;
+  margin-bottom:14px;
 }
-
-header p {
-  color: #aab2c0;
+h2{font-size:19px;margin-top:0;color:#e4c47e}
+h3{margin-bottom:8px}
+input,select{
+  width:100%;
+  padding:12px;
+  margin:6px 0 12px;
+  border-radius:8px;
+  border:1px solid #3a4557;
+  background:#101722;
+  color:white;
+  font-size:16px;
 }
-
-nav {
-  display: flex;
-  gap: 10px;
-  padding: 15px;
-  max-width: 700px;
-  margin: auto;
+button{
+  padding:12px;
+  border:0;
+  border-radius:8px;
+  background:#d6b36a;
+  color:#171717;
+  font-weight:bold;
+  cursor:pointer;
 }
-
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 9px;
-  padding: 12px;
-  font-size: 15px;
+button:disabled{opacity:.5}
+.full{width:100%}
+.voice{
+  width:100%;
+  background:#7544bd;
+  color:white;
+  margin-bottom:12px;
 }
-
-nav button {
-  flex: 1;
-  background: #282f3d;
-  color: white;
-}
-
-nav button.active {
-  background: #d9a94e;
-  color: #111;
-  font-weight: bold;
-}
-
-main {
-  max-width: 700px;
-  margin: auto;
-  padding: 15px;
-}
-
-.card {
-  background: #191f2b;
-  border: 1px solid #303746;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 15px;
-}
-
-h2 {
-  margin-top: 0;
-  color: #e8bd70;
-}
-
-label {
-  display: block;
-  margin: 13px 0 6px;
-}
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  background: #10141c;
-  color: white;
-  border: 1px solid #3b4556;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.primary {
-  width: 100%;
-  margin-top: 15px;
-  background: #d9a94e;
-  color: #111;
-  font-weight: bold;
-}
-
-.secondary {
-  background: #303949;
-  color: white;
-}
-
-.stat {
-  font-size: 26px;
-  font-weight: bold;
-  margin: 8px 0;
-}
-
-.muted {
-  color: #aab2c0;
-}
-
-.appointment {
-  padding: 13px;
-  margin-top: 10px;
-  border-radius: 9px;
-  background: #242c39;
-  overflow-wrap: anywhere;
-}
-
-.appointment button {
-  margin-top: 10px;
-}
-
-.hidden {
-  display: none;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #818b9c;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <h1>✂️ Berber Asistanı</h1>
-  <p>Randevularını kolayca yönet</p>
-</header>
-
-<nav>
-  <button id="barberTab" class="active"
-    onclick="showPage('barber')">
-    💈 Berber
-  </button>
-
-  <button id="customerTab"
-    onclick="showPage('customer')">
-    📱 Müşteri
-  </button>
-</nav>
-
-<main>
-
-<!-- BERBER UYGULAMASI -->
-
-<section id="barberPage">
-
-  <div class="card">
-    <h2>📊 Günlük Özet</h2>
-
-    <p class="muted">Bugünkü randevu sayısı</p>
-    <div class="stat" id="todayCount">0</div>
-
-    <p class="muted">Tamamlanan hizmetlerin toplam tutarı</p>
-    <div class="stat" id="todayRevenue">0 TL</div>
-  </div>
-
-  <div class="card">
-    <h2>➕ Elle Randevu Ekle</h2>
-
-    <label>Müşteri adı</label>
-    <input id="manualName" placeholder="Müşterinin adı">
-
-    <label>Telefon</label>
-    <input id="manualPhone" type="tel"
-      placeholder="05XX XXX XX XX">
-
-    <label>Berber</label>
-    <select id="manualBarber">
-      <option value="Ben">Ben</option>
-      <option value="Usta">Usta</option>
-    </select>
-
-    <label>Hizmet</label>
-    <select id="manualService">
-      <option value="Saç">Saç kesimi - 250 TL</option>
-      <option value="Sakal">Sakal - 100 TL</option>
-      <option value="Saç ve sakal">Saç ve sakal - 350 TL</option>
-    </select>
-
-    <label>Tarih</label>
-    <input type="date" id="manualDate">
-
-    <label>Saat</label>
-    <select id="manualTime"></select>
-
-    <button class="primary" onclick="addManual()">
-      Randevu Ekle
-    </button>
-  </div>
-
-  <div class="card">
-    <h2>📅 Randevular</h2>
-
-    <label>Tarihe göre görüntüle</label>
-    <input type="date" id="filterDate"
-      onchange="renderAppointments()">
-
-    <div id="appointments"></div>
-  </div>
-
-</section>
-
-<!-- MÜŞTERİ UYGULAMASI -->
-
-<section id="customerPage" class="hidden">
-
-  <div class="card">
-    <h2>💈 Randevu Al</h2>
-
-    <p class="muted">
-      Berberini ve hizmetini seç, sana uygun saati belirle.
-    </p>
-
-    <label>Adın</label>
-    <input id="customerName" placeholder="Adın ve soyadın">
-
-    <label>Telefon numaran</label>
-    <input id="customerPhone" type="tel"
-      placeholder="05XX XXX XX XX">
-
-    <label>Berber seç</label>
-    <select id="customerBarber">
-      <option value="Ben">Ben</option>
-      <option value="Usta">Usta</option>
-    </select>
-
-    <label>Hizmet seç</label>
-    <select id="customerService">
-      <option value="Saç">Saç kesimi - 250 TL</option>
-      <option value="Sakal">Sakal - 100 TL</option>
-      <option value="Saç ve sakal">Saç ve sakal - 350 TL</option>
-    </select>
-
-    <label>Tarih</label>
-    <input type="date" id="customerDate"
-      onchange="updateCustomerTimes()">
-
-    <label>Saat</label>
-    <select id="customerTime"></select>
-
-    <button class="primary" onclick="bookAppointment()">
-      Randevumu Oluştur
-    </button>
-  </div>
-
-  <div class="card">
-    <h2>ℹ️ Bilgilendirme</h2>
-    <p class="muted">
-      Randevu oluşturduğunda bu tarayıcıdaki randevu
-      listesine eklenir. Gerçek SMS doğrulaması ve
-      farklı telefonlar arasında veri paylaşımı için
-      ayrıca sunucu bağlantısı kurulmalıdır.
-    </p>
-  </div>
-
-</section>
-
-</main>
-
-<footer>
-  Berber Asistanı · Randevularını kolayca yönet
-</footer>
-
-<script>
-const prices = {
-  "Saç": 250,
-  "Sakal": 100,
-  "Saç ve sakal": 350
-};
-
-function loadAppointments() {
-  try {
-    return JSON.parse(
-      localStorage.getItem("berberRandevulari") || "[]"
-    );
-  } catch {
-    return [];
-  }
-}
-
-function saveAppointments(data) {
-  localStorage.setItem(
-    "berberRandevulari",
-    JSON.stringify(data)
-  );
-}
-
-function today() {
-  const d = new Date();
-  const offset = d.getTimezoneOffset();
-  return new Date(d.getTime() - offset * 60000)
-    .toISOString().slice(0, 10);
-}
-
-function showPage(page) {
-  document.getElementById("barberPage")
-    .classList.toggle("hidden", page !== "barber");
-
-  document.getElementById("customerPage")
-    .classList.toggle("hidden", page !== "customer");
-
-  document.getElementById("barberTab")
-    .classList.toggle("active", page === "barber");
-
-  document.getElementById("customerTab")
-    .classList.toggle("active", page === "customer");
-
-  renderAppointments();
-}
-
-function fillTimes(selectId, date, barber) {
-  const select = document.getElementById(selectId);
-  select.innerHTML = "";
-
-  if (!date) {
-    select.add(new Option("Önce tarih seç", ""));
-    return;
-  }
-
-  const all = loadAppointments();
-  let count = 0;
-
-  for (let hour = 9; hour < 20; hour++) {
-    for (const minute of [0, 30]) {
-      if (hour === 19 && minute === 30) continue;
-
-      const time =
-        String(hour).padStart(2, "0") + ":" +
-        String(minute).padStart(2, "0");
-
-      const occupied = all.some(a =>
-        a.date === date &&
-        a.time === time &&
-        a.barber === barber &&
-        a.status !== "İptal"
-      );
-
-      if (!occupied) {
-        select.add(new Option(time, time));
-        count++;
-      }
-    }
-  }
-
-  if (!count) {
-    select.add(new Option("Boş saat yok", ""));
-  }
-}
-
-function updateCustomerTimes() {
-  fillTimes(
-    "customerTime",
-    document.getElementById("customerDate").value,
-    document.getElementById("customerBarber").value
-  );
-}
-
-document.getElementById("customerBarber")
-  .addEventListener("change", updateCustomerTimes);
-
-document.getElementById("manualBarber")
-  .addEventListener("change", updateManualTimes);
-
-document.getElementById("manualDate")
-  .addEventListener("change", updateManualTimes);
-
-function updateManualTimes() {
-  fillTimes(
-    "manualTime",
-    document.getElementById("manualDate").value,
-    document.getElementById("manualBarber").value
-  );
-}
-
-function bookAppointment() {
-  const name = document.getElementById("customerName")
-    .value.trim();
-
-  const phone = document.getElementById("customerPhone")
-    .value.trim();
-
-  const barber = document.getElementById("customerBarber")
-    .value;
-
-  const service = document.getElementById("customerService")
-    .value;
-
-  const date = document.getElementById("customerDate")
-    .value;
-
-  const time = document.getElementById("customerTime")
-    .value;
-
-  if (!name || !phone || !date || !time) {
-    alert("Lütfen tüm alanları doldur.");
-    return;
-  }
-
-  if (date < today()) {
-    alert("Geçmiş bir tarihe randevu alamazsın.");
-    return;
-  }
-
-  const appointments = loadAppointments();
-
-  const occupied = appointments.some(a =>
-    a.date === date &&
-    a.time === time &&
-    a.barber === barber &&
-    a.status !== "İptal"
-  );
-
-  if (occupied) {
-    alert("Bu saat az önce dolmuş. Başka saat seç.");
-    updateCustomerTimes();
-    return;
-  }
-
-  appointments.push({
-    id: Date.now(),
-    name,
-    phone,
-    barber,
-    service,
-    price: prices[service],
-    date,
-    time,
-    status: "Bekliyor"
-  });
-
-  saveAppointments(appointments);
-
-  alert("Randevun oluşturuldu!");
-
-  document.getElementById("customerName").value = "";
-  document.getElementById("customerPhone").value = "";
-
-  renderAppointments();
-  updateCustomerTimes();
-}
-
-function addManual() {
-  const name = document.getElementById("manualName")
-    .value.trim();
-
-  const phone = document.getElementById("manualPhone")
-    .value.trim();
-
-  const barber = document.getElementById("manualBarber")
-    .value;
-
-  const service = document.getElementById("manualService")
-    .value;
-
-  const date = document.getElementById("manualDate")
-    .value;
-
-  const time = document.getElementById("manualTime")
-    .value;
-
-  if (!name || !date || !time) {
-    alert("Müşteri adı, tarih ve saat gerekli.");
-    return;
-  }
-
-  if (date < today()) {
-    alert("Geçmiş bir tarihe randevu ekleyemezsin.");
-    return;
-  }
-
-  const appointments = loadAppointments();
-
-  if (appointments.some(a =>
-    a.date === date &&
-    a.time === time &&
-    a.barber === barber &&
-    a.status !== "İptal"
-  )) {
-    alert("Bu saat dolu. Başka bir saat seç.");
-    return;
-  }
-
-  appointments.push({
-    id: Date.now(),
-    name,
-    phone,
-    barber,
-    service,
-    price: prices[service],
-    date,
-    time,
-    status: "Bekliyor"
-  });
-
-  saveAppointments(appointments);
-
-  document.getElementById("manualName").value = "";
-  document.getElementById("manualPhone").value = "";
-
-  renderAppointments();
-  updateManualTimes();
-
-  alert("Randevu eklendi.");
-}
-
-function changeStatus(id, status) {
-  const appointments = loadAppointments();
-
-  const appointment = appointments.find(a => a.id === id);
-
-  if (appointment) {
-    appointment.status = status;
-    saveAppointments(appointments);
-    renderAppointments();
-    updateCustomerTimes();
-    updateManualTimes();
-  }
-}
-
-function renderAppointments() {
-  const appointments = loadAppointments();
-
-  const filter =
-    document.getElementById("filterDate").value || today();
-
-  const list = appointments
-    .filter(a => a.date === filter)
-    .sort((a, b) => a.time.localeCompare(b.time));
-
-  const container = document.getElementById("appointments");
-
-  container.innerHTML = "";
-
-  list.forEach(a => {
-    const item = document.createElement("div");
-    item.className = "appointment";
-
-    const title = document.createElement("strong");
-    title.textContent = a.time + " · " + a.name;
-
-    const details = document.createElement("p");
-    details.textContent =
-      a.barber + " · " + a.service + " · " +
-      a.price + "
+.secondary{background:#344155;color:white}
+.approve{background:#238b57;color:white}
+.reject{background:#b63e48;color:white}
+.done
