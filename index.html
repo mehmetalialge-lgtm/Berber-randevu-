@@ -7,65 +7,52 @@
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:#10141c;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-header{
-  background:#171e2a;
-  padding:20px;
-  text-align:center;
-  border-bottom:1px solid #303949;
-}
-header h1{margin:0;color:#d6b36a}
-header p{color:#aab3c2;margin-bottom:0}
-nav{
-  display:flex;
-  gap:8px;
-  padding:12px;
-  background:#171e2a;
-}
+body{margin:0;background:#10141c;color:white;font-family:Arial,sans-serif}
+header{padding:22px;text-align:center;background:#1b2330}
+h1{color:#e4c47e;margin:0}
+main{max-width:700px;margin:auto;padding:14px}
+nav{display:flex;gap:8px;padding:12px;background:#1b2330}
+button{padding:12px;border:0;border-radius:8px;background:#dfbd70;color:#171717;font-weight:bold;cursor:pointer}
 nav button{flex:1}
-main{padding:14px;max-width:700px;margin:auto}
-.card{
-  background:#1a2230;
-  border:1px solid #303949;
-  padding:16px;
-  border-radius:14px;
-  margin-bottom:14px;
-}
-h2{font-size:19px;margin-top:0;color:#e4c47e}
-h3{margin-bottom:8px}
-input,select{
-  width:100%;
-  padding:12px;
-  margin:6px 0 12px;
-  border-radius:8px;
-  border:1px solid #3a4557;
-  background:#101722;
-  color:white;
-  font-size:16px;
-}
-button{
-  padding:12px;
-  border:0;
-  border-radius:8px;
-  background:#d6b36a;
-  color:#171717;
-  font-weight:bold;
-  cursor:pointer;
-}
-button:disabled{opacity:.5}
+.card{background:#1b2330;border:1px solid #354153;border-radius:12px;padding:16px;margin-bottom:14px}
+h2{color:#e4c47e;font-size:20px}
+input,select{width:100%;padding:12px;margin:7px 0 14px;background:#101722;color:white;border:1px solid #445064;border-radius:8px;font-size:16px}
 .full{width:100%}
-.voice{
-  width:100%;
-  background:#7544bd;
-  color:white;
-  margin-bottom:12px;
-}
-.secondary{background:#344155;color:white}
-.approve{background:#238b57;color:white}
-.reject{background:#b63e48;color:white}
-.done
+.voice{width:100%;background:#774bc0;color:white}
+.green{background:#248451;color:white}
+.red{background:#b63e48;color:white}
+.blue{background:#287caa;color:white}
+.gray{background:#39485d;color:white}
+.hidden{display:none}
+.notice{font-size:13px;color:#bbc5d4;line-height:1.5}
+.item{background:#111923;padding:13px;border:1px solid #39475a;border-radius:10px;margin:12px 0}
+.item p{overflow-wrap:anywhere}
+.status{color:#e4c47e;font-weight:bold}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{flex:1;margin-top:5px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:14px;background:#111923;border-radius:8px}
+.stat strong{display:block;color:#e4c47e;font-size:22px;margin-top:8px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>✂️ Berber Asistanı</h1>
+<p>Randevu ve Kazanç Yönetimi</p>
+</header>
+
+<nav>
+<button onclick="sayfa('berber')">✂️ Berber</button>
+<button onclick="sayfa('musteri')">👤 Müşteri</button>
+</nav>
+
+<main>
+
+<section id="berber">
+
+<div class="card">
+<h2>🎤 Sesle Randevu</h2>
+<p class="notice">Örnek: Yarın saat 14.30'a Ahmet'i yaz, saç tıraşı, ben alacağım.</p>
+<button class="voice full" id="sesButon" onclick="sesBaslat()">🎙️
