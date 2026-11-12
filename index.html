@@ -1,256 +1,107 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#10141c">
-<title>Berber Özel</title>
+<meta name="theme-color" content="#f5f7f5">
+<title>Berber Asistanı</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#10141c;color:white;font-family:Arial,sans-serif}
-header{padding:22px;background:#171e2a;text-align:center;border-bottom:1px solid #30394a}
-header h1{margin:0}
-main{max-width:760px;margin:auto;padding:15px}
-.card{background:#171e2a;padding:16px;border-radius:12px;margin-bottom:15px;border:1px solid #30394a}
-h2{font-size:19px;margin-top:0}
-label{display:block;margin:12px 0 6px}
-input,select,textarea{width:100%;padding:12px;background:#0e131c;border:1px solid #39465a;border-radius:8px;color:white;font-size:16px}
-button{padding:11px;border:0;border-radius:8px;background:#16a085;color:white;font-weight:bold;cursor:pointer;margin-top:8px}
+body{margin:0;background:#f5f7f5;color:#26332b;font-family:Arial,sans-serif}
+.app{max-width:480px;margin:auto;padding:20px 16px 90px}
+header{display:flex;justify-content:space-between;align-items:center;margin:10px 0 28px}
+.logo{font-size:21px;font-weight:bold}
+.logo span{color:#26985b}
+.avatar{background:#e4f3e9;color:#26985b;border-radius:50%;padding:13px}
+h2{font-size:23px;margin:0 0 7px}
+.muted{color:#929b94;font-size:13px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.stat,.card{background:white;border-radius:16px;padding:17px;box-shadow:0 3px 14px #00000006}
+.stat strong{display:block;font-size:23px;margin:12px 0 5px}
+.green{color:#26985b}
+.section{display:flex;justify-content:space-between;margin:25px 0 13px}
+button{border:0;border-radius:11px;padding:13px;background:#26985b;color:white;font-weight:bold}
 .full{width:100%}
-.voice{background:#7455d9}
-.approve{background:#138b58}
-.reject{background:#b33d4b}
-.complete{background:#2766c7}
-.item{border:1px solid #39465a;padding:13px;border-radius:9px;margin-top:10px}
-.muted{font-size:13px;color:#aeb9ca}
-.badge{display:inline-block;padding:5px 8px;border-radius:6px;background:#66512a;font-size:12px;margin:8px 0}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:#202a3a;padding:13px;border-radius:8px}
-.stat strong{display:block;color:#36d6ad;font-size:22px;margin-top:6px}
-.hidden{display:none!important}
+input,select{width:100%;padding:14px;border:1px solid #e9ede9;border-radius:11px;background:#fafbfa;font-size:15px;margin:7px 0 14px}
+.page{display:none}
+.page.active{display:block}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 3px}
+.nav button{background:white;color:#849087;font-size:11px;padding:5px}
+.nav span{display:block;font-size:19px;margin-bottom:4px}
+.nav button.active{color:#26985b}
+.booking{background:white;border-radius:14px;padding:15px;margin:10px 0}
+.booking p{font-size:12px;color:#89938c}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions button{flex:1;font-size:12px}
+.light{background:#edf6f0;color:#26985b}
+.red{background:#fff0ef;color:#c64b45}
 </style>
 </head>
 <body>
-
+<div class="app">
 <header>
-<h1>✂️ Berber Özel</h1>
-<p class="muted">Berber yönetim paneli</p>
+<div class="logo">BERBER <span>ASİSTANI</span></div>
+<div class="avatar">BA</div>
 </header>
 
-<main>
-<section id="giris" class="card">
-<h2>🔐 Berber Girişi</h2>
-<p class="muted">Bu PIN yalnızca şimdilik basit bir ekran kilididir.</p>
-<label>PIN kodu</label>
-<input id="pin" type="password" inputmode="numeric" placeholder="PIN kodunu gir">
-<button class="full" onclick="girisYap()">Giriş Yap</button>
-<p id="girisMesaj" class="muted"></p>
+<section id="home" class="page active">
+<h2>Hoş geldin 👋</h2>
+<div class="muted">Bugünkü dükkan özeti</div>
+<div class="stats">
+<div class="stat">Bugünkü kazanç<strong class="green" id="kazanc">0 TL</strong></div>
+<div class="stat">Randevular<strong id="sayac">0</strong></div>
+<div class="stat">Bekleyen<strong id="bekleyen">0</strong></div>
+<div class="stat">Müşteriler<strong id="musteri">0</strong></div>
+</div>
+<div class="section"><b>Son randevular</b></div>
+<div id="son"></div>
+<button class="full" onclick="git('ekle')">＋ Yeni randevu</button>
 </section>
 
-<div id="panel" class="hidden">
-
+<section id="ekle" class="page">
+<h2>Yeni randevu</h2>
+<p class="muted">Müşteri bilgilerini gir</p>
 <div class="card">
-<h2>🎙️ Sesle Randevu Ekle</h2>
-<p class="muted">Örnek: Yarın saat 14.30'a Ahmet'i yaz, saç tıraşı, ben alacağım.</p>
-<button class="voice full" onclick="sesBaslat()">🎙️ Konuşarak Randevu Gir</button>
-<p id="sesDurum" class="muted">Konuştuğunda bilgiler forma doldurulur.</p>
-</div>
-
-<div class="card">
-<h2>➕ Randevu Ekle</h2>
-<form id="form">
 <label>Müşteri adı</label>
-<input id="ad" required placeholder="Ad soyad">
-
+<input id="isim" placeholder="Ad soyad">
 <label>Telefon</label>
-<input id="telefon" type="tel" placeholder="Telefon numarası">
-
+<input id="telefon" placeholder="05xx xxx xx xx">
+<label>Tarih</label>
+<input id="tarih" type="date">
+<label>Saat</label>
+<input id="saat" type="time">
+<label>Hizmet</label>
+<select id="hizmet">
+<option value="400">Saç kesimi - 400 TL</option>
+<option value="200">Sakal - 200 TL</option>
+<option value="600">Saç + sakal - 600 TL</option>
+</select>
 <label>Berber</label>
 <select id="berber">
 <option>Ben</option>
 <option>Usta</option>
 </select>
-
-<label>İşlem</label>
-<select id="islem">
-<option>Saç</option>
-<option>Sakal</option>
-<option>Saç ve sakal</option>
-</select>
-
-<label>Tarih ve saat</label>
-<input id="tarih" type="datetime-local" required>
-
-<label>Not</label>
-<textarea id="not" rows="2" placeholder="Ek bilgi"></textarea>
-
-<button class="full" type="submit">Randevuyu Kaydet</button>
-</form>
+<button class="full" onclick="ekle()">Randevu talebi oluştur</button>
 </div>
+</section>
 
-<div class="card">
-<h2>💰 Kazanç Özeti</h2>
-<div class="stats">
-<div class="stat">Bugünkü kazanç<strong id="bugun">0 TL</strong></div>
-<div class="stat">Bu ay<strong id="ay">0 TL</strong></div>
-<div class="stat">Onay bekleyen<strong id="bekleyen">0</strong></div>
-<div class="stat">Tamamlanan<strong id="tamamlanan">0</strong></div>
-</div>
-<p class="muted">Yalnızca tamamlanan randevular kazanca eklenir.</p>
-</div>
-
-<div class="card">
-<h2>📋 Randevular</h2>
-<label>Tarihe göre filtrele</label>
-<input id="filtre" type="date" onchange="listele()">
-<button onclick="document.getElementById('filtre').value='';listele()">Tüm Tarihler</button>
+<section id="randevular" class="page">
+<h2>Randevular</h2>
 <div id="liste"></div>
+</section>
+
+<section id="kazancSayfa" class="page">
+<h2>Kazanç takibi</h2>
+<div class="card">
+<div class="muted">Onaylı randevu toplamı</div>
+<strong class="green" id="toplam">0 TL</strong>
 </div>
-
-<button class="full" onclick="cikisYap()">Kilitle ve Çıkış Yap</button>
-<p class="muted">Bu sürüm randevuları yalnızca kullanılan tarayıcıda saklar. Henüz çevrim içi değildir.</p>
+</section>
 </div>
-</main>
-
-<script>
-const PIN="1234";
-const KEY="berberRandevulari";
-let randevular=[];
-
-try{
-randevular=JSON.parse(localStorage.getItem(KEY)||"[]");
-if(!Array.isArray(randevular))randevular=[];
-}catch(e){randevular=[]}
-
-function girisYap(){
-if(document.getElementById("pin").value===PIN){
-document.getElementById("giris").classList.add("hidden");
-document.getElementById("panel").classList.remove("hidden");
-listele();
-ozet();
-}else{
-document.getElementById("girisMesaj").textContent="PIN yanlış. Tekrar dene.";
-}
-}
-function cikisYap(){
-document.getElementById("panel").classList.add("hidden");
-document.getElementById("giris").classList.remove("hidden");
-document.getElementById("pin").value="";
-}
-function fiyat(x){return x==="Sakal"?100:x==="Saç ve sakal"?350:250}
-function kaydet(){
-localStorage.setItem(KEY,JSON.stringify(randevular));
-listele();ozet();
-}
-function ekle(v){
-const d=new Date(v.tarih);
-if(isNaN(d.getTime())){alert("Tarihi kontrol et.");return false}
-if(d.getTime()<Date.now()){alert("Geçmiş bir saate randevu veremezsin.");return false}
-if(d.getHours()<9||d.getHours()>=19||d.getMinutes()%30!==0){
-alert("Saatler 09.00-18.30 arasında, yarım saatlik aralıklarla olmalı.");return false
-}
-const cakisma=randevular.some(r=>
-r.berber===v.berber&&
-["Onaylandı","Onay Bekliyor"].includes(r.durum)&&
-Math.abs(new Date(r.tarih)-d)<30*60*1000
-);
-if(cakisma){alert("Bu berberin o saatte başka randevusu var.");return false}
-randevular.push({
-id:Date.now().toString()+Math.random().toString(16).slice(2),
-ad:v.ad,telefon:v.telefon,berber:v.berber,islem:v.islem,
-fiyat:fiyat(v.islem),tarih:v.tarih,not:v.not,
-durum:v.durum||"Onaylandı"
-});
-kaydet();return true;
-}
-document.getElementById("form").addEventListener("submit",function(e){
-e.preventDefault();
-const ok=ekle({
-ad:document.getElementById("ad").value.trim(),
-telefon:document.getElementById("telefon").value,
-berber:document.getElementById("berber").value,
-islem:document.getElementById("islem").value,
-tarih:document.getElementById("tarih").value,
-not:document.getElementById("not").value
-});
-if(ok){this.reset();alert("Randevu kaydedildi.")}
-});
-function guvenli(s){
-return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function listele(){
-const f=document.getElementById("filtre").value;
-const arr=[...randevular].sort((a,b)=>new Date(a.tarih)-new Date(b.tarih))
-.filter(r=>!f||r.tarih.slice(0,10)===f);
-document.getElementById("liste").innerHTML=arr.length?arr.map(r=>`
-<div class="item">
-<h3>${guvenli(r.ad)}</h3>
-<div>${guvenli(new Date(r.tarih).toLocaleString("tr-TR"))}</div>
-<div class="muted">${guvenli(r.berber)} · ${guvenli(r.islem)} · ${r.fiyat} TL</div>
-${r.telefon?`<div class="muted">${guvenli(r.telefon)}</div>`:""}
-${r.not?`<div class="muted">${guvenli(r.not)}</div>`:""}
-<span class="badge">${guvenli(r.durum)}</span><br>
-${r.durum==="Onay Bekliyor"?`<button class="approve" onclick="durum('${r.id}','Onaylandı')">Onayla</button><button class="reject" onclick="durum('${r.id}','Reddedildi')">Reddet</button>`:""}
-${r.durum==="Onaylandı"?`<button class="complete" onclick="durum('${r.id}','Tamamlandı')">Tamamlandı</button><button class="reject" onclick="durum('${r.id}','İptal Edildi')">İptal Et</button>`:""}
-<button class="reject" onclick="sil('${r.id}')">Sil</button>
-</div>`).join(""):'<p class="muted">Randevu bulunmuyor.</p>';
-}
-function durum(id,d){
-const r=randevular.find(x=>x.id===id);if(!r)return;
-if(d==="Onaylandı"){
-const cakisma=randevular.some(x=>x.id!==id&&x.berber===r.berber&&
-["Onaylandı","Onay Bekliyor"].includes(x.durum)&&
-Math.abs(new Date(x.tarih)-new Date(r.tarih))<30*60*1000);
-if(cakisma){alert("Bu saatte başka randevu var.");return}
-}
-r.durum=d;kaydet();
-}
-function sil(id){
-if(confirm("Randevu silinsin mi?")){
-randevular=randevular.filter(r=>r.id!==id);kaydet();
-}
-}
-function ozet(){
-const simdi=new Date();
-const bugun=simdi.getFullYear()+"-"+String(simdi.getMonth()+1).padStart(2,"0")+"-"+String(simdi.getDate()).padStart(2,"0");
-const ay=bugun.slice(0,7);
-const b=randevular.filter(r=>r.durum==="Tamamlandı");
-const toplam=a=>a.reduce((s,r)=>s+Number(r.fiyat||0),0);
-document.getElementById("bugun").textContent=toplam(b.filter(r=>r.tarih.slice(0,10)===bugun))+" TL";
-document.getElementById("ay").textContent=toplam(b.filter(r=>r.tarih.slice(0,7)===ay))+" TL";
-document.getElementById("bekleyen").textContent=randevular.filter(r=>r.durum==="Onay Bekliyor").length;
-document.getElementById("tamamlanan").textContent=b.length;
-}
-function sesBaslat(){
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-const durumEl=document.getElementById("sesDurum");
-if(!SR){durumEl.textContent="Ses tanıma bu tarayıcıda desteklenmiyor. Chrome ile dene.";return}
-const sr=new SR();sr.lang="tr-TR";
-durumEl.textContent="Dinliyorum...";
-sr.onresult=e=>{
-const metin=e.results[0][0].transcript;
-durumEl.textContent="Duyulan: "+metin;
-sesDoldur(metin);
-};
-sr.onerror=()=>durumEl.textContent="Mikrofon iznini kontrol et.";
-sr.start();
-}
-function sesDoldur(metin){
-const k=metin.toLocaleLowerCase("tr-TR");
-const isim=metin.match(/(?:^|\s)([A-ZÇĞİÖŞÜ][a-zçğıöşü]+)/);
-if(isim)document.getElementById("ad").value=isim[1];
-if(k.includes("usta"))document.getElementById("berber").value="Usta";
-else document.getElementById("berber").value="Ben";
-if(k.includes("saç ve sakal")||k.includes("saç sakal"))document.getElementById("islem").value="Saç ve sakal";
-else if(k.includes("sakal"))document.getElementById("islem").value="Sakal";
-else document.getElementById("islem").value="Saç";
-const d=new Date();
-if(k.includes("yarın")||k.includes("yarin"))d.setDate(d.getDate()+1);
-const s=k.match(/(?:saat\s*)?(\d{1,2})[.:](\d{2})/);
-if(s)d.setHours(+s[1],+s[2],0,0);
-else{const h=k.match(/saat\s+(\d{1,2})/);if(h)d.setHours(+h[1],0,0,0)}
-document.getElementById("tarih").value=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
-}
-</script>
-</body>
-</html>
+<nav class="nav">
+<button class="active" onclick="git('home',this)"><span>⌂</span>Ana sayfa</button>
+<button onclick="git('randevular',this)"><span>▤</span>Randevular</button>
+<button onclick="git('ekle',this)"><span>＋</span>Yeni ekle</button>
+<button onclick="git('kazancSayfa',this)"><span>₺</span>Kazanç</button>
+</nav>
