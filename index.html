@@ -6,64 +6,241 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
 <title>BARBER ELITE</title>
+
 <style>
-:root{--bg:#101827;--panel:#192538;--gold:#d8ad55;--white:#f5f3ed;--muted:#9ba6b5;--line:#29364a}
+:root{
+--bg:#0b111b;
+--panel:#172334;
+--gold:#d8ad55;
+--white:#f5f3ed;
+--muted:#a0aaba;
+--line:#2a394d;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
-.app{max-width:480px;margin:auto;padding:20px 17px 100px}
-header{display:flex;justify-content:space-between;align-items:center;margin:8px 0 30px}
-.brand{font-size:20px;font-weight:900;letter-spacing:2px}
+body{
+margin:0;
+background:var(--bg);
+color:var(--white);
+font-family:Arial,sans-serif;
+}
+.app{
+max-width:480px;
+margin:auto;
+padding:18px 16px 105px;
+}
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:8px 0 22px;
+}
+.brand{
+font-size:20px;
+font-weight:900;
+letter-spacing:2px;
+}
 .brand span{color:var(--gold)}
-.avatar{width:42px;height:42px;border-radius:50%;background:#29364a;display:grid;place-items:center;color:var(--gold)}
-.greeting{color:var(--muted);font-size:13px}
-h1{font-size:25px;margin:7px 0}
+.avatar{
+width:43px;height:43px;
+border-radius:50%;
+background:#26364b;
+display:grid;place-items:center;
+color:var(--gold);font-size:21px;
+}
+.hero{
+height:235px;
+position:relative;
+overflow:hidden;
+border-radius:20px;
+margin-bottom:25px;
+border:1px solid #5b492b;
+background:
+linear-gradient(0deg,rgba(8,14,23,.98),rgba(8,14,23,.05) 85%),
+url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1100&auto=format&fit=crop") center/cover;
+}
+.hero-content{
+position:absolute;
+bottom:20px;
+left:19px;
+right:15px;
+}
+.hero small{
+color:var(--gold);
+font-size:10px;
+letter-spacing:3px;
+font-weight:bold;
+}
+.hero h2{
+font-size:27px;
+margin:9px 0 5px;
+}
+.hero p{
+font-size:12px;
+color:#d2d5dc;
+margin:0;
+}
+.greeting{color:var(--muted);font-size:12px;letter-spacing:.5px}
+h1{font-size:25px;margin:8px 0}
 h2{font-size:18px;margin:0}
 .gold{color:var(--gold)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
-.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:17px}
-.stat small{color:var(--muted)}
-.stat strong{display:block;font-size:23px;margin-top:12px}
-.heading{display:flex;justify-content:space-between;align-items:center;margin:28px 0 14px}
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:11px;
+margin:22px 0;
+}
+.stat,.card{
+background:linear-gradient(145deg,#1c2b40,#131e2d);
+border:1px solid var(--line);
+border-radius:17px;
+padding:17px;
+}
+.stat small{color:var(--muted);font-size:10px}
+.stat strong{
+display:block;
+font-size:22px;
+margin-top:12px;
+}
+.heading{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:27px 0 14px;
+}
 .heading small{color:var(--gold)}
-button{border:0;border-radius:11px;padding:13px;background:var(--gold);color:#17202d;font-weight:bold;font-size:14px}
-.full{width:100%}
-input,select{width:100%;padding:14px;background:#111d2d;color:white;border:1px solid var(--line);border-radius:11px;margin:7px 0 15px;font-size:15px}
-label{font-size:12px;color:var(--muted)}
-.page{display:none}.page.active{display:block}
-.booking{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px;margin:10px 0}
-.booking p{font-size:12px;color:var(--muted);margin:7px 0}
+button{
+border:0;
+border-radius:11px;
+padding:13px;
+background:var(--gold);
+color:#17202d;
+font-weight:bold;
+font-size:13px;
+cursor:pointer;
+}
+button:active{transform:scale(.98)}
+.full{width:100%;margin-top:12px}
+input,select{
+width:100%;
+padding:14px;
+background:#101a29;
+color:white;
+border:1px solid var(--line);
+border-radius:11px;
+margin:7px 0 15px;
+font-size:15px;
+}
+input:focus,select:focus{outline:1px solid var(--gold)}
+label{
+font-size:11px;
+color:var(--muted);
+letter-spacing:.5px;
+}
+.page{display:none}
+.page.active{display:block}
+.booking{
+background:linear-gradient(145deg,#1c2b40,#131e2d);
+border:1px solid var(--line);
+border-left:3px solid var(--gold);
+border-radius:15px;
+padding:15px;
+margin:10px 0;
+}
+.booking p{
+font-size:12px;
+color:var(--muted);
+margin:7px 0;
+}
 .tag{color:var(--gold);font-size:11px}
-.actions{display:flex;gap:8px;margin-top:12px}
-.actions button{flex:1;font-size:12px;padding:10px}
-.secondary{background:#29364a;color:white}
-.danger{background:#67383a;color:white}
-.empty{text-align:center;color:var(--muted);padding:22px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#131f30;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:12px 2px max(12px,env(safe-area-inset-bottom))}
-.nav button{background:none;color:var(--muted);font-size:10px;padding:5px}
+.actions{display:flex;gap:7px;margin-top:12px}
+.actions button{flex:1;font-size:11px;padding:10px 5px}
+.secondary{background:#34445a;color:white}
+.danger{background:#713b40;color:white}
+.empty{
+text-align:center;
+color:var(--muted);
+padding:25px 10px;
+background:#141f2e;
+border-radius:14px;
+font-size:13px;
+}
+.nav{
+position:fixed;
+bottom:0;left:0;right:0;
+background:rgba(15,25,39,.97);
+backdrop-filter:blur(15px);
+border-top:1px solid var(--line);
+display:flex;
+justify-content:space-around;
+padding:11px 2px max(12px,env(safe-area-inset-bottom));
+z-index:10;
+}
+.nav button{
+background:none;
+color:var(--muted);
+font-size:10px;
+padding:5px 3px;
+}
 .nav button.active{color:var(--gold)}
-.nav span{display:block;font-size:20px;margin-bottom:4px}
+.nav span{
+display:block;
+font-size:20px;
+margin-bottom:4px;
+}
+.note{
+font-size:11px;
+line-height:1.5;
+color:var(--muted);
+margin-top:12px;
+}
 </style>
 </head>
+
 <body>
 <div class="app">
+
 <header>
 <div class="brand">BARBER <span>ELITE</span></div>
 <div class="avatar">💈</div>
 </header>
 
 <section id="home" class="page active">
+
+<div class="hero">
+<div class="hero-content">
+<small>PREMIUM BARBER EXPERIENCE</small>
+<h2>Tarzın burada başlar.</h2>
+<p>Kalite, ustalık ve kusursuz kesim.</p>
+</div>
+</div>
+
 <div class="greeting">BERBER YÖNETİM PANELİ</div>
 <h1>Hoş geldin, <span class="gold">Berber.</span></h1>
 <div class="greeting" id="bugun"></div>
 
 <div class="stats">
-<div class="stat"><small>BUGÜNKÜ KAZANÇ</small><strong class="gold" id="gunluk">0 TL</strong></div>
-<div class="stat"><small>BUGÜNKÜ RANDEVU</small><strong id="adet">0</strong></div>
-<div class="stat"><small>ONAY BEKLEYEN</small><strong id="bekleyen">0</strong></div>
-<div class="stat"><small>MÜŞTERİ SAYISI</small><strong id="musteriAdet">0</strong></div>
+<div class="stat">
+<small>BUGÜNKÜ KAZANÇ</small>
+<strong class="gold" id="gunluk">0 TL</strong>
+</div>
+<div class="stat">
+<small>BUGÜNKÜ RANDEVU</small>
+<strong id="adet">0</strong>
+</div>
+<div class="stat">
+<small>ONAY BEKLEYEN</small>
+<strong id="bekleyen">0</strong>
+</div>
+<div class="stat">
+<small>MÜŞTERİ SAYISI</small>
+<strong id="musteriAdet">0</strong>
+</div>
 </div>
 
-<div class="heading"><h2>Yaklaşan randevular</h2><small>BUGÜN</small></div>
+<div class="heading">
+<h2>Yaklaşan randevular</h2>
+<small>BUGÜN</small>
+</div>
 <div id="son"></div>
 <button class="full" onclick="git('ekle')">＋ YENİ RANDEVU OLUŞTUR</button>
 </section>
@@ -71,25 +248,35 @@ label{font-size:12px;color:var(--muted)}
 <section id="ekle" class="page">
 <div class="greeting">RANDEVU YÖNETİMİ</div>
 <h1>Yeni <span class="gold">Randevu</span></h1>
+
 <div class="card">
 <label>MÜŞTERİ ADI</label>
 <input id="isim" placeholder="Müşterinin adı">
+
 <label>TELEFON</label>
 <input id="telefon" type="tel" placeholder="05xx xxx xx xx">
+
 <label>HİZMET</label>
 <select id="hizmet">
 <option value="400">Saç kesimi · 400 TL</option>
 <option value="200">Sakal · 200 TL</option>
 <option value="600">Saç + sakal · 600 TL</option>
 </select>
+
 <label>BERBER</label>
-<select id="berber"><option>Ben</option><option>Usta</option></select>
+<select id="berber">
+<option>Ben</option>
+<option>Usta</option>
+</select>
+
 <label>TARİH</label>
 <input id="tarih" type="date">
+
 <label>SAAT</label>
 <input id="saat" type="time">
+
 <button class="full" onclick="ekle()">RANDEVUYU KAYDET</button>
-<p class="greeting">Randevu kaydedildiğinde onay bekler. Sen onaylamadan kesinleşmez.</p>
+<p class="note">Randevu kaydedildiğinde onay bekler. Sen onaylamadan kesinleşmez.</p>
 </div>
 </section>
 
@@ -114,69 +301,230 @@ label{font-size:12px;color:var(--muted)}
 </div>
 <div id="kazancListe"></div>
 </section>
+
 </div>
 
 <nav class="nav">
-<button class="active" onclick="git('home',this)"><span>⌂</span>Ana sayfa</button>
-<button onclick="git('randevular',this)"><span>▦</span>Randevu</button>
-<button onclick="git('ekle',this)"><span>＋</span>Ekle</button>
-<button onclick="git('musteriler',this)"><span>♙</span>Müşteri</button>
-<button onclick="git('kazanc',this)"><span>₺</span>Kazanç</button>
+<button class="active" onclick="git('home',this)">
+<span>⌂</span>Ana sayfa
+</button>
+<button onclick="git('randevular',this)">
+<span>▦</span>Randevu
+</button>
+<button onclick="git('ekle',this)">
+<span>＋</span>Ekle
+</button>
+<button onclick="git('musteriler',this)">
+<span>♙</span>Müşteri
+</button>
+<button onclick="git('kazanc',this)">
+<span>₺</span>Kazanç
+</button>
 </nav>
 
 <script>
 const KEY="barber_elite_data";
 let data=[];
-try{data=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){data=[]}
+
+try{
+data=JSON.parse(localStorage.getItem(KEY)||"[]");
+}catch(e){data=[]}
+
 const $=id=>document.getElementById(id);
-const bugun=()=>{let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+
+const bugun=()=>{
+let d=new Date();
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
+};
+
 const para=n=>Number(n).toLocaleString("tr-TR")+" TL";
-function guvenli(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function dakika(s){let [h,m]=s.split(":").map(Number);return h*60+m}
-function kaydet(){localStorage.setItem(KEY,JSON.stringify(data));goster()}
+
+function guvenli(s){
+return String(s||"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",
+'"':"&quot;","'":"&#39;"
+}[c]));
+}
+
+function dakika(s){
+let [h,m]=s.split(":").map(Number);
+return h*60+m;
+}
+
+function kaydet(){
+localStorage.setItem(KEY,JSON.stringify(data));
+goster();
+}
+
 function git(id,btn){
 document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
 $(id).classList.add("active");
+
 document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
-if(btn)btn.classList.add("active");
-else document.querySelectorAll(".nav button")[["home","randevular","ekle","musteriler","kazanc"].indexOf(id)].classList.add("active");
-goster()
+
+if(btn){
+btn.classList.add("active");
+}else{
+let index=["home","randevular","ekle","musteriler","kazanc"].indexOf(id);
+document.querySelectorAll(".nav button")[index].classList.add("active");
 }
+goster();
+window.scrollTo(0,0);
+}
+
 function ekle(){
-let isim=$("isim").value.trim(),telefon=$("telefon").value.trim(),tarih=$("tarih").value,saat=$("saat").value;
-let fiyat=Number($("hizmet").value),berber=$("berber").value;
+let isim=$("isim").value.trim();
+let telefon=$("telefon").value.trim();
+let tarih=$("tarih").value;
+let saat=$("saat").value;
+let fiyat=Number($("hizmet").value);
+let berber=$("berber").value;
 let hizmet=$("hizmet").selectedOptions[0].text;
 let sure=fiyat===400?30:fiyat===200?15:45;
-if(!isim||!tarih||!saat){alert("Eksik bilgi var.");return}
-if(new Date(tarih+"T12:00:00").getDay()===0){alert("Pazar günü kapalı.");return}
-if(saat<"08:00"||saat>"22:30"||dakika(saat)+sure>1350){alert("Çalışma saatleri 08:00-22:30.");return}
-if(data.some(x=>x.tarih===tarih&&x.berber===berber&&x.durum!=="İptal"&&dakika(saat)<dakika(x.saat)+x.sure&&dakika(x.saat)<dakika(saat)+sure)){alert("Bu berberin saati dolu.");return}
-data.push({id:Date.now(),isim,telefon,tarih,saat,fiyat,berber,hizmet,sure,durum:"Bekliyor"});
-kaydet();
-$("isim").value="";$("telefon").value="";
-alert("Randevu kaydedildi. Onayını bekliyor.");
-git("randevular")
+
+if(!isim||!tarih||!saat){
+alert("Eksik bilgi var.");
+return;
 }
-function onay(id){let x=data.find(a=>a.id===id);if(x)x.durum="Onaylandı";kaydet()}
-function iptal(id){if(confirm("Randevu iptal edilsin mi?")){let x=data.find(a=>a.id===id);if(x)x.durum="İptal";kaydet()}}
-function sil(id){if(confirm("Tamamen silinsin mi?")){data=data.filter(a=>a.id!==id);kaydet()}}
-function kart(x){return `<div class="booking"><b>${guvenli(x.isim)}</b><p>${x.tarih} · ${x.saat} · ${guvenli(x.berber)}</p><p>${guvenli(x.hizmet)} · ${para(x.fiyat)}</p><span class="tag">${guvenli(x.durum)}</span><div class="actions">${x.durum==="Bekliyor"?`<button onclick="onay(${x.id})">ONAYLA</button>`:""}${x.durum!=="İptal"?`<button class="danger" onclick="iptal(${x.id})">İPTAL</button>`:""}<button class="secondary" onclick="sil(${x.id})">SİL</button></div></div>`}
+
+if(new Date(tarih+"T12:00:00").getDay()===0){
+alert("Pazar günü kapalı.");
+return;
+}
+
+if(saat<"08:00"||saat>"22:30"||dakika(saat)+sure>1350){
+alert("Çalışma saatleri 08:00-22:30.");
+return;
+}
+
+if(data.some(x=>
+x.tarih===tarih&&
+x.berber===berber&&
+x.durum!=="İptal"&&
+dakika(saat)<dakika(x.saat)+x.sure&&
+dakika(x.saat)<dakika(saat)+sure
+)){
+alert("Bu berberin saati dolu.");
+return;
+}
+
+data.push({
+id:Date.now(),
+isim,telefon,tarih,saat,
+fiyat,berber,hizmet,sure,
+durum:"Bekliyor"
+});
+
+kaydet();
+
+$("isim").value="";
+$("telefon").value="";
+$("tarih").value=bugun();
+$("saat").value="";
+
+alert("Randevu kaydedildi. Onayını bekliyor.");
+git("randevular");
+}
+
+function onay(id){
+let x=data.find(a=>a.id===id);
+if(x)x.durum="Onaylandı";
+kaydet();
+}
+
+function iptal(id){
+if(confirm("Randevu iptal edilsin mi?")){
+let x=data.find(a=>a.id===id);
+if(x)x.durum="İptal";
+kaydet();
+}
+}
+
+function sil(id){
+if(confirm("Tamamen silinsin mi?")){
+data=data.filter(a=>a.id!==id);
+kaydet();
+}
+}
+
+function kart(x){
+return `
+<div class="booking">
+<b>${guvenli(x.isim)}</b>
+<p>${x.tarih} · ${x.saat} · ${guvenli(x.berber)}</p>
+<p>${guvenli(x.hizmet)} · ${para(x.fiyat)}</p>
+<span class="tag">${guvenli(x.durum)}</span>
+<div class="actions">
+${x.durum==="Bekliyor"?`<button onclick="onay(${x.id})">ONAYLA</button>`:""}
+${x.durum!=="İptal"?`<button class="danger" onclick="iptal(${x.id})">İPTAL</button>`:""}
+<button class="secondary" onclick="sil(${x.id})">SİL</button>
+</div>
+</div>`;
+}
+
 function goster(){
 let onayli=data.filter(x=>x.durum==="Onaylandı");
 let bugunluk=onayli.filter(x=>x.tarih===bugun());
-let sirali=[...data].sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
-$("bugun").textContent=new Date().toLocaleDateString("tr-TR",{weekday:"long",day:"numeric",month:"long"});
-$("gunluk").textContent=para(bugunluk.reduce((a,x)=>a+x.fiyat,0));
-$("toplam").textContent=para(onayli.reduce((a,x)=>a+x.fiyat,0));
-$("adet").textContent=data.filter(x=>x.tarih===bugun()&&x.durum!=="İptal").length;
-$("bekleyen").textContent=data.filter(x=>x.durum==="Bekliyor").length;
-let ms=new Map();data.forEach(x=>ms.set(x.telefon||x.isim,x));
+
+let sirali=[...data].sort((a,b)=>
+(a.tarih+a.saat).localeCompare(b.tarih+b.saat)
+);
+
+$("bugun").textContent=new Date().toLocaleDateString("tr-TR",{
+weekday:"long",day:"numeric",month:"long"
+});
+
+$("gunluk").textContent=para(
+bugunluk.reduce((a,x)=>a+x.fiyat,0)
+);
+
+$("toplam").textContent=para(
+onayli.reduce((a,x)=>a+x.fiyat,0)
+);
+
+$("adet").textContent=data.filter(x=>
+x.tarih===bugun()&&x.durum!=="İptal"
+).length;
+
+$("bekleyen").textContent=data.filter(x=>
+x.durum==="Bekliyor"
+).length;
+
+let ms=new Map();
+data.forEach(x=>ms.set(x.telefon||x.isim,x));
+
 $("musteriAdet").textContent=ms.size;
-$("son").innerHTML=sirali.filter(x=>x.durum!=="İptal").slice(0,4).map(kart).join("")||'<div class="empty">Henüz randevu yok.</div>';
-$("liste").innerHTML=sirali.map(kart).join("")||'<div class="empty">Henüz randevu yok.</div>';
-$("musterilerListe").innerHTML=[...ms.values()].map(x=>`<div class="booking"><b>${guvenli(x.isim)}</b><p>${guvenli(x.telefon||"Telefon yok")}</p><p>Son randevu: ${x.tarih}</p></div>`).join("")||'<div class="empty">Henüz müşteri yok.</div>';
-$("kazancListe").innerHTML=onayli.map(x=>`<div class="booking"><b>${guvenli(x.isim)}</b><p>${x.tarih} · ${para(x.fiyat)}</p></div>`).join("")||'<div class="empty">Henüz onaylı randevu yok.</div>';
+
+$("son").innerHTML=sirali
+.filter(x=>x.durum!=="İptal")
+.slice(0,4)
+.map(kart).join("")||
+'<div class="empty">Henüz randevu yok.</div>';
+
+$("liste").innerHTML=sirali.map(kart).join("")||
+'<div class="empty">Henüz randevu yok.</div>';
+
+$("musterilerListe").innerHTML=[...ms.values()]
+.map(x=>`
+<div class="booking">
+<b>${guvenli(x.isim)}</b>
+<p>${guvenli(x.telefon||"Telefon yok")}</p>
+<p>Son randevu: ${x.tarih}</p>
+</div>
+`).join("")||
+'<div class="empty">Henüz müşteri yok.</div>';
+
+$("kazancListe").innerHTML=onayli.map(x=>`
+<div class="booking">
+<b>${guvenli(x.isim)}</b>
+<p>${x.tarih} · ${para(x.fiyat)}</p>
+</div>
+`).join("")||
+'<div class="empty">Henüz onaylı randevu yok.</div>';
 }
+
 $("tarih").value=bugun();
 goster();
 </script>
