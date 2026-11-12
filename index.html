@@ -3,39 +3,40 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#f5f7f5">
 <title>Berber Asistanı</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f7f5;color:#26332b;font-family:Arial,sans-serif}
-.app{max-width:480px;margin:auto;padding:20px 16px 90px}
-header{display:flex;justify-content:space-between;align-items:center;margin:10px 0 28px}
-.logo{font-size:21px;font-weight:bold}
-.logo span{color:#26985b}
-.avatar{background:#e4f3e9;color:#26985b;border-radius:50%;padding:13px}
+body{margin:0;background:#f4f6f4;color:#26332b;font-family:Arial,sans-serif}
+.app{max-width:480px;margin:auto;padding:20px 16px 100px}
+header{display:flex;justify-content:space-between;align-items:center;margin:8px 0 28px}
+.logo{font-size:21px;font-weight:800}.logo span{color:#26985b}
+.avatar{background:#e3f3e9;color:#26985b;border-radius:50%;padding:13px;font-weight:bold}
 h2{font-size:23px;margin:0 0 7px}
 .muted{color:#929b94;font-size:13px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
-.stat,.card{background:white;border-radius:16px;padding:17px;box-shadow:0 3px 14px #00000006}
+.stat,.card,.booking{background:white;border-radius:16px;padding:16px;box-shadow:0 3px 14px #00000006}
 .stat strong{display:block;font-size:23px;margin:12px 0 5px}
 .green{color:#26985b}
 .section{display:flex;justify-content:space-between;margin:25px 0 13px}
-button{border:0;border-radius:11px;padding:13px;background:#26985b;color:white;font-weight:bold}
+button{border:0;border-radius:11px;padding:13px;background:#26985b;color:white;font-weight:bold;font-size:14px;cursor:pointer}
 .full{width:100%}
-input,select{width:100%;padding:14px;border:1px solid #e9ede9;border-radius:11px;background:#fafbfa;font-size:15px;margin:7px 0 14px}
-.page{display:none}
-.page.active{display:block}
-.nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 3px}
-.nav button{background:white;color:#849087;font-size:11px;padding:5px}
-.nav span{display:block;font-size:19px;margin-bottom:4px}
-.nav button.active{color:#26985b}
-.booking{background:white;border-radius:14px;padding:15px;margin:10px 0}
-.booking p{font-size:12px;color:#89938c}
-.actions{display:flex;gap:8px;margin-top:10px}
-.actions button{flex:1;font-size:12px}
 .light{background:#edf6f0;color:#26985b}
 .red{background:#fff0ef;color:#c64b45}
+input,select{width:100%;padding:14px;border:1px solid #e8ece8;border-radius:11px;background:#fafbfa;font-size:15px;margin:7px 0 14px;color:#26332b}
+label{font-size:13px;font-weight:bold}
+.page{display:none}.page.active{display:block}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #edf0ed;display:flex;justify-content:space-around;padding:11px 2px max(11px,env(safe-area-inset-bottom));z-index:5}
+.nav button{background:white;color:#849087;font-size:11px;padding:5px}
+.nav button.active{color:#26985b}
+.nav span{display:block;font-size:19px;margin-bottom:4px}
+.booking{margin:10px 0}
+.booking p{font-size:12px;color:#89938c;margin:7px 0}
+.actions{display:flex;gap:8px;margin-top:12px}
+.actions button{flex:1;font-size:12px;padding:10px}
+.status{font-size:12px;color:#26985b;background:#edf6f0;padding:6px 9px;border-radius:8px;display:inline-block}
+.empty{text-align:center;color:#929b94;padding:25px;font-size:13px}
 </style>
 </head>
 <body>
@@ -47,61 +48,210 @@ input,select{width:100%;padding:14px;border:1px solid #e9ede9;border-radius:11px
 
 <section id="home" class="page active">
 <h2>Hoş geldin 👋</h2>
-<div class="muted">Bugünkü dükkan özeti</div>
+<div class="muted" id="bugunYazi"></div>
 <div class="stats">
-<div class="stat">Bugünkü kazanç<strong class="green" id="kazanc">0 TL</strong></div>
-<div class="stat">Randevular<strong id="sayac">0</strong></div>
-<div class="stat">Bekleyen<strong id="bekleyen">0</strong></div>
-<div class="stat">Müşteriler<strong id="musteri">0</strong></div>
+<div class="stat"><div class="muted">Bugünkü onaylı tutar</div><strong class="green" id="gunlukKazanc">0 TL</strong></div>
+<div class="stat"><div class="muted">Bugünkü randevu</div><strong id="gunlukSayi">0</strong></div>
+<div class="stat"><div class="muted">Onay bekleyen</div><strong id="bekleyenSayi">0</strong></div>
+<div class="stat"><div class="muted">Müşteri sayısı</div><strong id="musteriSayi">0</strong></div>
 </div>
-<div class="section"><b>Son randevular</b></div>
-<div id="son"></div>
-<button class="full" onclick="git('ekle')">＋ Yeni randevu</button>
+<div class="section"><b>Yaklaşan randevular</b></div>
+<div id="sonRandevular"></div>
+<button class="full" onclick="git('ekle')">＋ Yeni randevu ekle</button>
 </section>
 
 <section id="ekle" class="page">
 <h2>Yeni randevu</h2>
-<p class="muted">Müşteri bilgilerini gir</p>
+<p class="muted">Randevu bilgilerini gir</p>
 <div class="card">
 <label>Müşteri adı</label>
-<input id="isim" placeholder="Ad soyad">
+<input id="isim" placeholder="Müşteri adı">
 <label>Telefon</label>
-<input id="telefon" placeholder="05xx xxx xx xx">
+<input id="telefon" type="tel" placeholder="05xx xxx xx xx">
 <label>Tarih</label>
 <input id="tarih" type="date">
 <label>Saat</label>
 <input id="saat" type="time">
 <label>Hizmet</label>
 <select id="hizmet">
-<option value="400">Saç kesimi - 400 TL</option>
-<option value="200">Sakal - 200 TL</option>
-<option value="600">Saç + sakal - 600 TL</option>
+<option value="400">Saç kesimi — 400 TL</option>
+<option value="200">Sakal — 200 TL</option>
+<option value="600">Saç + sakal — 600 TL</option>
 </select>
 <label>Berber</label>
-<select id="berber">
-<option>Ben</option>
-<option>Usta</option>
-</select>
-<button class="full" onclick="ekle()">Randevu talebi oluştur</button>
+<select id="berber"><option>Ben</option><option>Usta</option></select>
+<button class="full" onclick="ekle()">Randevu kaydet</button>
+<p class="muted">Kaydedilen randevu önce onay bekler.</p>
 </div>
 </section>
 
 <section id="randevular" class="page">
 <h2>Randevular</h2>
-<div id="liste"></div>
+<p class="muted">Onayla veya iptal et</p>
+<div id="tumRandevular"></div>
 </section>
 
-<section id="kazancSayfa" class="page">
+<section id="musteriler" class="page">
+<h2>Müşteriler</h2>
+<p class="muted">Kayıtlı müşteri listesi</p>
+<div id="musteriListesi"></div>
+</section>
+
+<section id="kazanc" class="page">
 <h2>Kazanç takibi</h2>
+<p class="muted">Onaylanmış randevuların tutarı</p>
 <div class="card">
-<div class="muted">Onaylı randevu toplamı</div>
-<strong class="green" id="toplam">0 TL</strong>
+<div class="muted">Toplam onaylı tutar</div>
+<strong class="green" style="font-size:28px" id="toplamKazanc">0 TL</strong>
 </div>
+<div id="kazancDetay"></div>
 </section>
 </div>
+
 <nav class="nav">
 <button class="active" onclick="git('home',this)"><span>⌂</span>Ana sayfa</button>
-<button onclick="git('randevular',this)"><span>▤</span>Randevular</button>
+<button onclick="git('randevular',this)"><span>▤</span>Randevu</button>
 <button onclick="git('ekle',this)"><span>＋</span>Yeni ekle</button>
-<button onclick="git('kazancSayfa',this)"><span>₺</span>Kazanç</button>
+<button onclick="git('musteriler',this)"><span>♙</span>Müşteri</button>
+<button onclick="git('kazanc',this)"><span>₺</span>Kazanç</button>
 </nav>
+
+<script>
+const KEY="berber_asistani_v1";
+let liste=[];
+try{liste=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(liste))liste=[]}catch(e){liste=[]}
+
+const el=id=>document.getElementById(id);
+const para=n=>Number(n||0).toLocaleString("tr-TR")+" TL";
+const tarihBugun=()=>{let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+
+function kaydet(){
+localStorage.setItem(KEY,JSON.stringify(liste));
+goster();
+}
+
+function git(id,btn){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+el(id).classList.add("active");
+document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+if(btn)btn.classList.add("active");
+else{
+let index=["home","randevular","ekle","musteriler","kazanc"].indexOf(id);
+document.querySelectorAll(".nav button")[index]?.classList.add("active");
+}
+goster();
+}
+
+function dakika(s){
+let [h,m]=s.split(":").map(Number);
+return h*60+m;
+}
+
+function ekle(){
+let isim=el("isim").value.trim();
+let telefon=el("telefon").value.trim();
+let tarih=el("tarih").value;
+let saat=el("saat").value;
+let hizmet=el("hizmet");
+let fiyat=Number(hizmet.value);
+let berber=el("berber").value;
+let sure=fiyat===400?30:fiyat===200?15:45;
+
+if(!isim||!tarih||!saat){alert("İsim, tarih ve saat bilgilerini doldur.");return}
+if(new Date(tarih+"T12:00:00").getDay()===0){alert("Pazar günü kapalıyız.");return}
+if(saat<"08:00"||saat>"22:30"){alert("Çalışma saatleri 08:00 - 22:30.");return}
+if(dakika(saat)+sure>22*60+30){alert("Randevu kapanış saatini geçiyor.");return}
+
+let cakisma=liste.some(x=>{
+if(x.tarih!==tarih||x.berber!==berber||x.durum==="İptal")return false;
+return dakika(saat)<dakika(x.saat)+x.sure&&dakika(x.saat)<dakika(saat)+sure;
+});
+if(cakisma){alert("Bu berberin o saatinde başka randevusu var.");return}
+
+liste.push({
+id:Date.now(),isim,telefon,tarih,saat,berber,
+hizmet:hizmet.options[hizmet.selectedIndex].text,
+fiyat,sure,durum:"Bekliyor"
+});
+kaydet();
+el("isim").value="";
+el("telefon").value="";
+alert("Randevu kaydedildi. Onayını bekliyor.");
+git("randevular");
+}
+
+function onayla(id){
+let r=liste.find(x=>x.id===id);
+if(r)r.durum="Onaylandı";
+kaydet();
+}
+
+function iptal(id){
+if(!confirm("Bu randevuyu iptal etmek istiyor musun?"))return;
+let r=liste.find(x=>x.id===id);
+if(r)r.durum="İptal";
+kaydet();
+}
+
+function sil(id){
+if(!confirm("Randevu tamamen silinsin mi?"))return;
+liste=liste.filter(x=>x.id!==id);
+kaydet();
+}
+
+function kart(x){
+return `<div class="booking">
+<b>${guvenli(x.isim)}</b>
+<p>${x.tarih} · ${x.saat} · ${guvenli(x.berber)}</p>
+<p>${guvenli(x.hizmet)} · ${para(x.fiyat)}</p>
+<span class="status">${guvenli(x.durum)}</span>
+<div class="actions">
+${x.durum==="Bekliyor"?`<button onclick="onayla(${x.id})">Onayla</button>`:""}
+${x.durum!=="İptal"?`<button class="red" onclick="iptal(${x.id})">İptal</button>`:""}
+<button class="light" onclick="sil(${x.id})">Sil</button>
+</div>
+</div>`;
+}
+
+function guvenli(s){
+return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function goster(){
+let bugun=tarihBugun();
+let onayli=liste.filter(x=>x.durum==="Onaylandı");
+let gunluk=onayli.filter(x=>x.tarih===bugun);
+let sirali=[...liste].sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
+
+el("bugunYazi").textContent=new Date().toLocaleDateString("tr-TR",{weekday:"long",day:"numeric",month:"long"});
+el("gunlukKazanc").textContent=para(gunluk.reduce((a,x)=>a+Number(x.fiyat),0));
+el("toplamKazanc").textContent=para(onayli.reduce((a,x)=>a+Number(x.fiyat),0));
+el("gunlukSayi").textContent=liste.filter(x=>x.tarih===bugun&&x.durum!=="İptal").length;
+el("bekleyenSayi").textContent=liste.filter(x=>x.durum==="Bekliyor").length;
+
+let musteriler=new Map();
+liste.forEach(x=>{
+let key=x.telefon||x.isim;
+if(!musteriler.has(key))musteriler.set(key,x);
+});
+el("musteriSayi").textContent=musteriler.size;
+
+let aktif=sirali.filter(x=>x.durum!=="İptal");
+el("sonRandevular").innerHTML=aktif.length?aktif.slice(0,4).map(kart).join(""):'<div class="empty">Henüz randevu yok.</div>';
+el("tumRandevular").innerHTML=sirali.length?sirali.map(kart).join(""):'<div class="empty">Henüz randevu yok.</div>';
+
+el("musteriListesi").innerHTML=musteriler.size?[...musteriler.values()].map(x=>`
+<div class="booking"><b>${guvenli(x.isim)}</b>
+<p>${guvenli(x.telefon||"Telefon eklenmemiş")}</p>
+<p>Son kayıt: ${x.tarih}</p></div>`).join(""):'<div class="empty">Henüz müşteri yok.</div>';
+
+el("kazancDetay").innerHTML=onayli.length?onayli.map(x=>`
+<div class="booking"><b>${guvenli(x.isim)}</b>
+<p>${x.tarih} · ${x.saat} · ${para(x.fiyat)}</p></div>`).join(""):'<div class="empty">Henüz onaylı randevu yok.</div>';
+}
+
+el("tarih").value=tarihBugun();
+goster();
+</script>
+</body>
+</html>
